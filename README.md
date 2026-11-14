@@ -15,6 +15,14 @@ configs:
     path: extract/private/holdout.csv
 ---
 
+<!-- dataset-factory:links -->
+**Dataset Factory · v-fd86cbb0bc96aaca**
+
+[Dataset website](https://earino.github.io/factory-caa-fce-hpv-escalation/versions/v-fd86cbb0bc96aaca/) · [GitHub release](https://github.com/earino/factory-caa-fce-hpv-escalation/releases/tag/v-fd86cbb0bc96aaca) · [Hugging Face](https://huggingface.co/datasets/earino/factory-caa-fce-hpv-escalation/tree/v-fd86cbb0bc96aaca) · [Catalogue](https://earino.github.io/dataset-factory-site/)
+
+Artifact: 2a1b8fe5efdf2f0bae9a7777de98d0019bb70404c8aafbe0291a615e93f0573b
+<!-- /dataset-factory:links -->
+
 # Twelve-month escalation to High Priority Violator status after a Clean Air Act full compliance evaluation
 
 After a Clean Air Act source completes a full compliance evaluation with no active High Priority Violator episode, will that source enter High Priority Violator (HPV) status within the next 12 months?
