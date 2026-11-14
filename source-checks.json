@@ -1,0 +1,187 @@
+{
+  "checks": [
+    {
+      "check": "archive member availability",
+      "observed": "observed 10 archive members; missing []",
+      "expected": "required archive members all present: ['ICIS-AIR_FACILITIES.CSV', 'ICIS-AIR_PROGRAMS.CSV', 'ICIS-AIR_POLLUTANTS.CSV', 'ICIS-AIR_FCES_PCES.CSV', 'ICIS-AIR_STACK_TESTS.CSV', 'ICIS-AIR_TITLEV_CERTS.CSV', 'ICIS-AIR_VIOLATION_HISTORY.CSV', 'ICIS-AIR_FORMAL_ACTIONS.CSV']",
+      "passed": true
+    },
+    {
+      "check": "table row counts",
+      "observed": "{'facilities': 280538, 'programs': 459135, 'pollutants': 979487, 'fces': 1826028, 'stack_tests': 659443, 'titlev': 2586560, 'violations': 103550, 'formal': 107176}",
+      "expected": "every required table has at least one row",
+      "passed": true
+    },
+    {
+      "check": "facility field names resolved from header",
+      "observed": "{'identifier': 'PGM_SYS_ID', 'state': 'STATE', 'region': 'EPA_REGION', 'type': 'FACILITY_TYPE_CODE', 'sic': 'SIC_CODES', 'naics': 'NAICS_CODES', 'emission_class': 'AIR_POLLUTANT_CLASS_CODE'}",
+      "expected": "each facility attribute resolves to a published column name in the facilities table",
+      "passed": true
+    },
+    {
+      "check": "pollutant code pairs",
+      "observed": "866259 distinct facility and pollutant code pairs",
+      "expected": "at least one distinct facility and pollutant code pair is parsed from the current pollutants table",
+      "passed": true
+    },
+    {
+      "check": "FCE ACTUAL_END_DATE parse coverage",
+      "observed": "1826010 parsed of 1826028 nonblank values (ratio 1.000)",
+      "expected": "at least 90 percent of nonblank values parse as calendar dates",
+      "passed": true
+    },
+    {
+      "check": "HPV day-zero parse coverage",
+      "observed": "45084 parsed of 45085 nonblank values (ratio 1.000)",
+      "expected": "at least 90 percent of nonblank values parse as calendar dates",
+      "passed": true
+    },
+    {
+      "check": "HPV resolution parse coverage",
+      "observed": "70628 parsed of 70629 nonblank values (ratio 1.000)",
+      "expected": "at least 90 percent of nonblank values parse as calendar dates",
+      "passed": true
+    },
+    {
+      "check": "HPV episode rows",
+      "observed": "40239 distinct facility and day-zero episodes",
+      "expected": "at least one HPV day-zero episode is present",
+      "passed": true
+    },
+    {
+      "check": "stack test date column ACTUAL_END_DATE parse coverage",
+      "observed": "659432 parsed of 659439 nonblank values (ratio 1.000)",
+      "expected": "at least 90 percent of nonblank values parse as calendar dates",
+      "passed": true
+    },
+    {
+      "check": "stack test status examples",
+      "observed": "AIR_STACK_TEST_STATUS_CODE counts {'PSS': 585300, 'NA': 46526, 'FAI': 21064, 'PEN': 5945, <NA>: 383, 'INC': 214}",
+      "expected": "the documented Fail code FAI appears in the parsed status column of the current snapshot",
+      "passed": true
+    },
+    {
+      "check": "Title V certification date column ACTUAL_END_DATE parse coverage",
+      "observed": "2556520 parsed of 2556575 nonblank values (ratio 1.000)",
+      "expected": "at least 90 percent of nonblank values parse as calendar dates",
+      "passed": true
+    },
+    {
+      "check": "Title V deviation flag interpretation",
+      "observed": "FACILITY_RPT_DEVIATION_FLAG counts {<NA>: 1462740, 'N': 751385, 'Y': 372435}; confirmed Yes values 372435; No values 751385; unrecognized or blank values 1462740",
+      "expected": "confirmed Yes values count as reported deviations, No values count as none, and any other value is recorded here and treated as no confirmed deviation instead of aborting the build",
+      "passed": true
+    },
+    {
+      "check": "formal action settlement date parse coverage",
+      "observed": "107132 parsed of 107132 nonblank values (ratio 1.000)",
+      "expected": "at least 90 percent of nonblank values parse as calendar dates",
+      "passed": true
+    },
+    {
+      "check": "penalty amount numeric parse",
+      "observed": "107176 parsed of 107176 nonblank values",
+      "expected": "penalty amounts parse as numbers and blank values stay missing rather than becoming zero",
+      "passed": true
+    },
+    {
+      "check": "full evaluation code examples",
+      "observed": "COMP_MONITOR_TYPE_CODE counts {'FOO': 648115, 'PFF': 638394, 'PCE': 373495, 'POR': 99930, 'POM': 37953, 'FFO': 21841, 'POV': 3428, 'POI': 1373, 'POC': 686, 'PFR': 157, 'POF': 5}",
+      "expected": "the documented full evaluation codes FOO and FFO both appear in the current snapshot",
+      "passed": true
+    },
+    {
+      "check": "evaluation population funnel",
+      "observed": "full evaluation rows 669956; with a programs row 668975; inside a frozen window 150104; with a fully observed 365-day horizon 150104; excluded for an active HPV episode 4819; excluded for a same-day HPV day-zero 633; excluded for another full evaluation in the prior 365 days 29176; retained 114694",
+      "expected": "each stage of the frozen population rule can only remove rows and at least one evaluation row is retained",
+      "passed": true
+    },
+    {
+      "check": "target values",
+      "observed": "values [0, 1]; counts {0: 113509, 1: 1185}",
+      "expected": "target is binary, nonmissing, and uses only 0 and 1",
+      "passed": true
+    },
+    {
+      "check": "frozen split row and positive counts",
+      "observed": "{'train': {'rows': 58183, 'positives': 619}, 'eval': {'rows': 36500, 'positives': 417}, 'holdout': {'rows': 20011, 'positives': 149}}",
+      "expected": "train, eval and holdout each contain rows, at least one positive label and at least one negative label",
+      "passed": true
+    },
+    {
+      "check": "label window fully observed at extract",
+      "observed": "max horizon end 2026-06-30; extract boundary 2026-11-07",
+      "expected": "every horizon end falls on or before the 2026-11-07 snapshot boundary",
+      "passed": true
+    },
+    {
+      "check": "active HPV excluded at decision instant",
+      "observed": "0 included rows had an active HPV episode at the evaluation date",
+      "expected": "zero included rows",
+      "passed": true
+    },
+    {
+      "check": "same-day HPV day-zero excluded",
+      "observed": "0 included rows had an HPV day-zero equal to the evaluation date",
+      "expected": "zero included rows",
+      "passed": true
+    },
+    {
+      "check": "prior full evaluation within 365 days excluded",
+      "observed": "maximum prior full evaluations in the preceding 365 days among included rows 0",
+      "expected": "zero",
+      "passed": true
+    },
+    {
+      "check": "unique evaluation identifiers",
+      "observed": "0 duplicate evaluation_id values",
+      "expected": "zero",
+      "passed": true
+    },
+    {
+      "check": "one included evaluation per facility and day",
+      "observed": "0 duplicate facility and day rows",
+      "expected": "zero",
+      "passed": true
+    },
+    {
+      "check": "identifier and time completeness",
+      "observed": "0 missing evaluation identifiers; 0 missing evaluation dates",
+      "expected": "zero missing identifiers and zero missing dates",
+      "passed": true
+    },
+    {
+      "check": "facility join coverage for included rows",
+      "observed": "114694 of 114694 included rows carry a facility state value (ratio 1.000)",
+      "expected": "at least 95 percent of included evaluation rows join to a facilities row on the facility identifier",
+      "passed": true
+    },
+    {
+      "check": "declared feature coverage",
+      "observed": "{'state': 114694, 'epa_region': 114694, 'sic_2digit': 82445, 'naics_2digit': 114689, 'facility_type_code': 83397, 'air_pollutant_class_code': 114335, 'program_count': 114694, 'pollutant_count': 114694, 'comp_monitor_type_code': 114694, 'state_epa_flag': 114694, 'prior_evaluations_3y': 114694, 'days_since_last_evaluation': 105436, 'prior_stack_test_failures_3y': 114694, 'prior_hpv_count': 114694, 'days_since_hpv_resolution': 26545, 'prior_formal_actions_3y': 114694, 'prior_penalties_3y': 114694, 'prior_tv_deviations_3y': 114694}",
+      "expected": "every declared feature has at least one nonmissing value in the retained rows; missing days and penalties stay blank rather than zero",
+      "passed": true
+    },
+    {
+      "check": "program membership",
+      "observed": "minimum distinct program count among included rows 1",
+      "expected": "at least one distinct program code per included facility",
+      "passed": true
+    },
+    {
+      "check": "evaluation agency field",
+      "observed": "STATE_EPA_FLAG value counts {'S': 101064, 'L': 12407, 'E': 1223}",
+      "expected": "the lead agency field is populated for at least one included evaluation row",
+      "passed": true
+    },
+    {
+      "check": "365-day outcome horizon unit and frame",
+      "observed": "horizon end minus evaluation date equals 365 days for 114694 of 114694 rows; max horizon 2026-06-30",
+      "expected": "the label interval is (t, t plus 365 calendar days] with 365 treated as a day count, not as a calendar-year difference",
+      "passed": true,
+      "kind": "unit",
+      "unit": "days",
+      "frame": "date interval strictly after the evaluation date through 365 days later, inclusive"
+    }
+  ]
+}
